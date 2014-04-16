@@ -1,8 +1,7 @@
-
 .idea/
-
+node_modules/
 .DS_Store
 
-node_modules/
-
 lib/*.js
+
+famous-commonjs/

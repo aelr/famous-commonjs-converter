@@ -2,10 +2,11 @@ path = require 'path'
 fs = require 'fs-extra'
 wrench = require 'wrench'
 _ = require 'lodash'
+
 helpers = require './helpers'
 
-original = "../famous"
-converted = "../famous-commonjs"
+original = helpers.original
+converted = helpers.converted
 blacklist = [".git"]
 
 # Remove old conversion
@@ -26,5 +27,9 @@ _.each files, (file) ->
   console.log "Copying #{inPath} to #{outPath}"
   fs.copySync inPath, outPath
 
-debugger
-why = 7
+# Remove AMD lines from .js files
+files = wrench.readdirSyncRecursive(converted)
+js = /\.js$/i
+_.each files, (file) ->
+  if js.test file
+    helpers.processFile path.resolve converted, file
