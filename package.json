@@ -1,0 +1,19 @@
+{
+  "name": "famous-commonjs",
+  "version": "0.1.1",
+  "description": "Famo.us framework, in CommonJS format",
+  "main": " ",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": " ",
+  "devDependencies": {
+    "wrench": "~1.5.8",
+    "famous": "git+https://github.com/Famous/famous.git#flat0.1.1"
+  },
+  "dependencies": {
+    "lodash": "~2.4.1",
+    "fs-extra": "~0.8.1"
+  }
+}

@@ -1,0 +1,3 @@
+[submodule "famous"]
+	path = famous
+	url = https://github.com/Famous/famous.git
