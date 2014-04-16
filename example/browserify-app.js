@@ -1,12 +1,12 @@
 window.addEventListener('load', initialize);
 
 function initialize(){
-    var Engine         = require("../commonjs/core/Engine");
-    var Surface        = require("../commonjs/core/Surface");
-    var Modifier       = require("../commonjs/core/Modifier");
-    var Transform      = require("../commonjs/core/Transform");
-    var Transitionable = require("../commonjs/transitions/Transitionable");
-    var SnapTransition = require("../commonjs/transitions/SnapTransition");
+    var Engine         = require("../famous-commonjs/core/Engine");
+    var Surface        = require("../famous-commonjs/core/Surface");
+    var Modifier       = require("../famous-commonjs/core/Modifier");
+    var Transform      = require("../famous-commonjs/core/Transform");
+    var Transitionable = require("../famous-commonjs/transitions/Transitionable");
+    var SnapTransition = require("../famous-commonjs/transitions/SnapTransition");
     
     // create the main context
     var mainContext = Engine.createContext();

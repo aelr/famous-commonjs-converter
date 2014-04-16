@@ -1,4 +1,51 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+window.addEventListener('load', initialize);
+
+function initialize(){
+    var Engine         = require("../famous-commonjs/core/Engine");
+    var Surface        = require("../famous-commonjs/core/Surface");
+    var Modifier       = require("../famous-commonjs/core/Modifier");
+    var Transform      = require("../famous-commonjs/core/Transform");
+    var Transitionable = require("../famous-commonjs/transitions/Transitionable");
+    var SnapTransition = require("../famous-commonjs/transitions/SnapTransition");
+    
+    // create the main context
+    var mainContext = Engine.createContext();
+
+    var surface = new Surface({
+        size:[100,100],
+        content: 'Click Me',
+        classes: ['red-bg'],
+        properties: {
+            textAlign: 'center',
+            lineHeight: '100px'
+        }
+    });
+
+    var modifier = new Modifier({
+        origin: [.5,.5],
+        transform: Transform.translate(0,-240,0)
+    });
+
+    var mod2 = new Modifier({
+        transform: Transform.rotateX(0.2)
+    });
+
+    Transitionable.registerMethod('snap', SnapTransition);
+    var transition = {
+        method: "snap",
+        period: 1000,
+        dampingRatio: .3,
+        velocity: 0
+    };
+
+    surface.on("click", function(){
+        modifier.setTransform(Transform.translate(0,0,0),transition);
+    });
+
+    mainContext.add(modifier).add(mod2).add(surface);
+}
+},{"../famous-commonjs/core/Engine":4,"../famous-commonjs/core/Modifier":8,"../famous-commonjs/core/Surface":12,"../famous-commonjs/core/Transform":13,"../famous-commonjs/transitions/SnapTransition":21,"../famous-commonjs/transitions/Transitionable":22}],2:[function(require,module,exports){
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -225,7 +272,7 @@ Context.prototype.unpipe = function unpipe(target) {
 module.exports = Context;
 
 
-},{"../transitions/Transitionable":21,"./ElementAllocator":2,"./EventHandler":6,"./RenderNode":9,"./Transform":12}],2:[function(require,module,exports){
+},{"../transitions/Transitionable":22,"./ElementAllocator":3,"./EventHandler":7,"./RenderNode":10,"./Transform":13}],3:[function(require,module,exports){
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -333,7 +380,7 @@ ElementAllocator.prototype.getNodeCount = function getNodeCount() {
 module.exports = ElementAllocator;
 
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -673,7 +720,7 @@ optionsManager.on('change', function(data) {
 module.exports = Engine;
 
 
-},{"./Context":1,"./EventHandler":6,"./OptionsManager":8}],4:[function(require,module,exports){
+},{"./Context":2,"./EventHandler":7,"./OptionsManager":9}],5:[function(require,module,exports){
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -752,7 +799,7 @@ module.exports = {
 };
 
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -846,7 +893,7 @@ EventEmitter.prototype.bindThis = function bindThis(owner) {
 module.exports = EventEmitter;
 
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -1054,7 +1101,7 @@ EventHandler.prototype.unsubscribe = function unsubscribe(source) {
 module.exports = EventHandler;
 
 
-},{"./EventEmitter":5}],7:[function(require,module,exports){
+},{"./EventEmitter":6}],8:[function(require,module,exports){
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -1374,7 +1421,7 @@ Modifier.prototype.modify = function modify(target) {
 module.exports = Modifier;
 
 
-},{"../transitions/Transitionable":21,"../transitions/TransitionableTransform":22,"./Transform":12}],8:[function(require,module,exports){
+},{"../transitions/Transitionable":22,"../transitions/TransitionableTransform":23,"./Transform":13}],9:[function(require,module,exports){
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -1588,7 +1635,7 @@ OptionsManager.prototype.unpipe = function unpipe() {
 module.exports = OptionsManager;
 
 
-},{"./EventHandler":6}],9:[function(require,module,exports){
+},{"./EventHandler":7}],10:[function(require,module,exports){
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -1757,7 +1804,7 @@ RenderNode.prototype.render = function render() {
 module.exports = RenderNode;
 
 
-},{"./Entity":4,"./SpecParser":10}],10:[function(require,module,exports){
+},{"./Entity":5,"./SpecParser":11}],11:[function(require,module,exports){
 
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -1916,7 +1963,7 @@ SpecParser.prototype._parseSpec = function _parseSpec(spec, parentContext, sizeC
 module.exports = SpecParser;
 
 
-},{"./Transform":12}],11:[function(require,module,exports){
+},{"./Transform":13}],12:[function(require,module,exports){
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -2493,7 +2540,7 @@ Surface.prototype.setSize = function setSize(size) {
 module.exports = Surface;
 
 
-},{"./Entity":4,"./EventHandler":6,"./Transform":12}],12:[function(require,module,exports){
+},{"./Entity":5,"./EventHandler":7,"./Transform":13}],13:[function(require,module,exports){
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -3153,7 +3200,7 @@ Transform.behind = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -1e-3, 1];
 module.exports = Transform;
 
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -3534,7 +3581,7 @@ module.exports = Vector;
 
 
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -3996,7 +4043,7 @@ PhysicsEngine.prototype.on = function on(event, fn) {
 module.exports = PhysicsEngine;
 
 
-},{"../core/EventHandler":6}],15:[function(require,module,exports){
+},{"../core/EventHandler":7}],16:[function(require,module,exports){
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -4427,7 +4474,7 @@ Particle.prototype.unpipe = function unpipe() {
 module.exports = Particle;
 
 
-},{"../../core/EventHandler":6,"../../core/Transform":12,"../../math/Vector":13,"../integrators/SymplecticEuler":18}],16:[function(require,module,exports){
+},{"../../core/EventHandler":7,"../../core/Transform":13,"../../math/Vector":14,"../integrators/SymplecticEuler":19}],17:[function(require,module,exports){
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -4519,7 +4566,7 @@ Constraint.prototype.unpipe = function unpipe() {
 module.exports = Constraint;
 
 
-},{"../../core/EventHandler":6}],17:[function(require,module,exports){
+},{"../../core/EventHandler":7}],18:[function(require,module,exports){
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -4742,7 +4789,7 @@ Snap.prototype.applyConstraint = function applyConstraint(targets, source, dt) {
 module.exports = Snap;
 
 
-},{"../../math/Vector":13,"./Constraint":16}],18:[function(require,module,exports){
+},{"../../math/Vector":14,"./Constraint":17}],19:[function(require,module,exports){
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -4900,7 +4947,7 @@ SymplecticEuler.prototype.integrateOrientation = function integrateOrientation(b
 module.exports = SymplecticEuler;
 
 
-},{"../../core/OptionsManager":8}],19:[function(require,module,exports){
+},{"../../core/OptionsManager":9}],20:[function(require,module,exports){
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -4979,7 +5026,7 @@ MultipleTransition.prototype.reset = function reset(startState) {
 module.exports = MultipleTransition;
 
 
-},{"../utilities/Utility":24}],20:[function(require,module,exports){
+},{"../utilities/Utility":25}],21:[function(require,module,exports){
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -5249,7 +5296,7 @@ SnapTransition.prototype.set = function set(state, definition, callback) {
 module.exports = SnapTransition;
 
 
-},{"../math/Vector":13,"../physics/PhysicsEngine":14,"../physics/bodies/Particle":15,"../physics/constraints/Snap":17}],21:[function(require,module,exports){
+},{"../math/Vector":14,"../physics/PhysicsEngine":15,"../physics/bodies/Particle":16,"../physics/constraints/Snap":18}],22:[function(require,module,exports){
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -5462,7 +5509,7 @@ Transitionable.prototype.halt = function halt() {
 module.exports = Transitionable;
 
 
-},{"./MultipleTransition":19,"./TweenTransition":23}],22:[function(require,module,exports){
+},{"./MultipleTransition":20,"./TweenTransition":24}],23:[function(require,module,exports){
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -5680,7 +5727,7 @@ TransitionableTransform.prototype.halt = function halt() {
 module.exports = TransitionableTransform;
 
 
-},{"../core/Transform":12,"../utilities/Utility":24,"./Transitionable":21}],23:[function(require,module,exports){
+},{"../core/Transform":13,"../utilities/Utility":25,"./Transitionable":22}],24:[function(require,module,exports){
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -6097,7 +6144,7 @@ TweenTransition.customCurve = function customCurve(v1, v2) {
 module.exports = TweenTransition;
 
 
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -6188,51 +6235,4 @@ Utility.createDocumentFragmentFromHTML = function createDocumentFragmentFromHTML
 module.exports = Utility;
 
 
-},{}],25:[function(require,module,exports){
-window.addEventListener('load', initialize);
-
-function initialize(){
-    var Engine         = require("../commonjs/core/Engine");
-    var Surface        = require("../commonjs/core/Surface");
-    var Modifier       = require("../commonjs/core/Modifier");
-    var Transform      = require("../commonjs/core/Transform");
-    var Transitionable = require("../commonjs/transitions/Transitionable");
-    var SnapTransition = require("../commonjs/transitions/SnapTransition");
-    
-    // create the main context
-    var mainContext = Engine.createContext();
-
-    var surface = new Surface({
-        size:[100,100],
-        content: 'Click Me',
-        classes: ['red-bg'],
-        properties: {
-            textAlign: 'center',
-            lineHeight: '100px'
-        }
-    });
-
-    var modifier = new Modifier({
-        origin: [.5,.5],
-        transform: Transform.translate(0,-240,0)
-    });
-
-    var mod2 = new Modifier({
-        transform: Transform.rotateX(0.2)
-    });
-
-    Transitionable.registerMethod('snap', SnapTransition);
-    var transition = {
-        method: "snap",
-        period: 1000,
-        dampingRatio: .3,
-        velocity: 0
-    };
-
-    surface.on("click", function(){
-        modifier.setTransform(Transform.translate(0,0,0),transition);
-    });
-
-    mainContext.add(modifier).add(mod2).add(surface);
-}
-},{"../commonjs/core/Engine":3,"../commonjs/core/Modifier":7,"../commonjs/core/Surface":11,"../commonjs/core/Transform":12,"../commonjs/transitions/SnapTransition":20,"../commonjs/transitions/Transitionable":21}]},{},[25])
+},{}]},{},[1])
