@@ -18,6 +18,7 @@ module.exports = helpers =
     contents = fs.readFileSync file
     relativePath = path.relative("#{process.cwd()}/#{helpers.converted}", file)
     currentFileDepth = relativePath.split(path.sep).length - 1
+    debugger if file.indexOf "Engine" isnt -1
     updated = helpers.removeAMDBlock contents.toString(), currentFileDepth
     fs.writeFileSync file, updated
     return
@@ -25,7 +26,7 @@ module.exports = helpers =
   removeAMDBlock: (contents, currentDepth) ->
     lines = contents.split os.EOL
     eol = os.EOL
-    if lines.length = 1
+    if lines.length is 1
       lines = contents.split "\n"
       eol = "\n"
 
